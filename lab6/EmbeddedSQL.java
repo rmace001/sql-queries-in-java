@@ -252,10 +252,10 @@ public class EmbeddedSQL {
       // Your code goes here.
       // ...
       try{
-         String query = "SELECT * FROM Catalog WHERE cost < ";
-         System.out.print("\tEnter cost: $");
-         String input = in.readLine();
-         query += input;
+         String query = "SELECT sname, COUNT(*) FROM Parts NATURAL JOIN Suppliers NATURAL JOIN Catalog GROUP BY sname";
+         //System.out.print("\tEnter cost: $");
+         //String input = in.readLine();
+         //query += input;
 
          int rowCount = esql.executeQuery(query);
          System.out.println ("total row(s): " + rowCount);
@@ -268,30 +268,98 @@ public class EmbeddedSQL {
    public static void Query2(EmbeddedSQL esql){
       // Your code goes here.
       // ...
+	  try{
+         String query = "SELECT sname, COUNT(*) FROM Parts NATURAL JOIN Suppliers NATURAL JOIN Catalog GROUP BY sname HAVING count(*) > 2";
+         //System.out.print("\tEnter cost: $");
+         //String input = in.readLine();
+         //query += input;
+
+         int rowCount = esql.executeQuery(query);
+         System.out.println ("total row(s): " + rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
       // ...
    }//end Query2
 
    public static void Query3(EmbeddedSQL esql){
       // Your code goes here.
       // ...
+	  try{
+         String query = "SELECT sname, COUNT(*) FROM Parts P NATURAL JOIN Suppliers S NATURAL JOIN Catalog C WHERE S.sid not in (select C2.sid FROM Catalog C2 natural join Parts P2 where P2.color <> 'Green') GROUP BY sname";
+
+
+         //System.out.print("\tEnter cost: $");
+         //String input = in.readLine();
+         //query += input;
+
+         int rowCount = esql.executeQuery(query);
+         System.out.println ("total row(s): " + rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
+      // 
       // ...
    }//end Query3
 
    public static void Query4(EmbeddedSQL esql){
       // Your code goes here.
       // ...
+	  try{
+         String query = "select sname, max(cost) from Parts P natural join Suppliers S natural join Catalog C where S.sid in (select S2.sid from Suppliers S2 natural join Catalog C2 natural join Parts P2 where P2.color = 'Red' intersect select S3.sid from Suppliers S3 natural join Catalog C3 natural join Parts P3 where P3.color = 'Green') group by sname";
+
+
+         //System.out.print("\tEnter cost: $");
+         //String input = in.readLine();
+         //query += input;
+
+         int rowCount = esql.executeQuery(query);
+         System.out.println ("total row(s): " + rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
       // ...
    }//end Query4
 
    public static void Query5(EmbeddedSQL esql){
       // Your code goes here.
       // ...
+	  try{
+         
+		 System.out.print("\tEnter cost: $");
+         String input = in.readLine();
+		 //System.out.print("input: " + input + "\n");
+         String query = "select pname, cost from Parts P natural join Catalog C where c.cost < ";
+		 query += input;
+		 
+
+         int rowCount = esql.executeQuery(query);
+         System.out.println ("total row(s): " + rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
       // ...
    }//end Query5
 
    public static void Query6(EmbeddedSQL esql){
       // Your code goes here.
       // ...
+	  try{
+         System.out.print("\tEnter part name: ");
+         String input = in.readLine();
+		 //System.out.print("input: " + input + "\n");
+         String query = "select address from Parts P natural join Catalog C natural join Suppliers S where P.pname = \'";
+		 
+		 query = query + input + "\'";
+		 System.out.print(query+ "\n");
+			
+		 
+		 
+         int rowCount = esql.executeQuery(query);
+         System.out.println ("total row(s): " + rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
       // ...
    }//end Query6
 
